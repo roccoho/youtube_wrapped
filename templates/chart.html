@@ -1,0 +1,31 @@
+<div id="normal_chart_div">
+    <canvas id="normal_chart"></canvas>
+</div>
+<div id="day_chart_div">
+    <div id="day_inner_chart_div">
+        <canvas id="day_chart"></canvas>
+    </div>
+</div>
+
+<script>
+var main_color = 'rgba(189, 105, 242, 1)';
+var sec_color = 'rgba(64, 181, 217, 1)';
+var white = 'rgba(171, 171, 171, 1)';
+var transparent = 'rgba(0, 0, 0, 0)';
+var gray = 'rgba(50, 50, 50, 1)';
+var black = 'rgba(0, 0, 0, 1.0)';
+
+Chart.defaults.font.family = 'Roboto';
+Chart.defaults.font.size = 18;
+Chart.defaults.color = white;
+
+normal_chart_div = document.getElementById("normal_chart_div");
+scroll_chart_div = document.getElementById("day_chart_div");
+
+const y_axis_type_divs = ['video_radio', 'watch_radio', 'both_radio'];
+const chart_type_divs = ['line_chart', 'bar_chart'];
+const anchor_divs = ['summary_anc','graph_anc'];
+const graph_type_divs = ['graph_month', 'graph_week', 'graph_hour', 'graph_year'];
+chooseGraph();
+updateAnchor(); 
+</script> 

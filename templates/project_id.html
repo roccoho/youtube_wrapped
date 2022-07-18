@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles/style.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="absolute_center">   
+        {% if error %}
+        <p class=error><strong>Error:</strong> {{ error }}
+        {% endif %}  
+        <p>Select date range:</p> 
+        <form action = "/projectid_date" method = "POST">
+            <label for="datefrom">From: </label> 
+            <input type="date" id="datefrom" name="datefrom"/> 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="dateto">To: </label>
+            <input type="date" id="dateto" name="dateto"/> <br><br>
+    
+            <label for="projectid">Project ID: </label>
+            <input type="text" id="projectid" name="projectid"><br><br>
+            <div id="submit_div">
+                <input type="submit">
+            </div> 
+        </form>
+    </div> 
+
+    <script>
+    var dates_ = {{dates|tojson}}; 
+    datefrom = document.getElementById('datefrom');
+    datefrom.value = datefrom.min = dateto.min = dates_[0]; 
+    dateto = document.getElementById('dateto');
+    dateto.value = datefrom.max = dateto.max = dates_[1]; 
+
+    </script>
+</body>
+</html>
