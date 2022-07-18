@@ -1,8 +1,8 @@
 # youtube_wrapped
-Spotify Wrapped but Youtube
+**Spotify Wrapped but Youtube**
 
 
-Inspirations: 
+**Inspirations:** 
 - https://github.com/A3M4/YouTube-Report
 - https://github.com/Sank6/YouTube-Wrapped
 
