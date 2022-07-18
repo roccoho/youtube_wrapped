@@ -13,15 +13,15 @@
         <p class=error><strong>Error:</strong> {{ error }}
         {% endif %}  
         <p>Select date range:</p> 
-        <form action = "/projectid_date" method = "POST">
+        <form action = "/api_key_date" method = "POST">
             <label for="datefrom">From: </label> 
             <input type="date" id="datefrom" name="datefrom"/> 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label for="dateto">To: </label>
             <input type="date" id="dateto" name="dateto"/> <br><br>
     
-            <label for="projectid">Project ID: </label>
-            <input type="text" id="projectid" name="projectid"><br><br>
+            <label for="api_key">API key: </label>
+            <input type="text" id="api_key" name="api_key"><br><br>
             <div id="submit_div">
                 <input type="submit">
             </div> 
