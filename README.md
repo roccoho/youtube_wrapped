@@ -30,6 +30,7 @@
   - https://observablehq.com/@contervis/clickable-word-cloud
 - matrix chart for hour & dayofweek:
   - https://github.com/kurkle/chartjs-chart-matrix
+- locked y-axis graph horizontal scrolling
 - better way to parse API response 
 - loading screen (and speed up loading time, API calls bottleneck?)
 - setup server?
