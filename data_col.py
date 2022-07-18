@@ -46,6 +46,7 @@ def watch_hist_json_to_csv(path):
         df[['channelName','channelId']] = pd.json_normalize(pd.json_normalize(df['subtitles'])[0])  # because of list of dictionary in subtitles column
         df['channelId'] = df['channelId'].str[32:]  # only id for api calls
         df['titleUrl'] = df['titleUrl'].str[32:]
+        df['title'] = df['title'].str[8:]  # remove "Watched" in title
         df = df[['title', 'titleUrl', 'time', 'channelName', 'channelId']]
         df['time'] = df['time'].apply(parse_time)
         # df = df[df['time'].dt.year == YEAR]
@@ -65,7 +66,7 @@ def watch_hist_json_to_csv(path):
 def filter_watch_hist_date(earliest, latest):
     try:
         df = pd.read_csv(WATCH_HIST_CSV)
-        latest = datetime.datetime.strptime(latest, '%Y-%m-%d') + datetime.timedelta(days=1) # needs an extra day to be inclusive
+        latest = datetime.datetime.strptime(latest, '%Y-%m-%d') + datetime.timedelta(days=1)  # needs an extra day to be inclusive
         latest = latest.strftime('%Y-%m-%d')
         df = df[(df['date_time']>=earliest) & (df['date_time']<=latest)]
         df.to_csv(WATCH_HIST_CSV, encoding='utf-8-sig', index=False)
