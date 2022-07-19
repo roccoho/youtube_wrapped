@@ -1,6 +1,4 @@
-# Youtube Wrapped
-**Spotify Wrapped but Youtube**
-
+# Youtube Wrapped  
 
 **Inspirations:** 
 - https://github.com/A3M4/YouTube-Report
