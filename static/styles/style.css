@@ -215,7 +215,7 @@ a:link{
     display: contents;
 }
 
-
+.tag_top_tag,
 .video_top_video,
 .channel_top_channel {
     width: 100%;
@@ -291,13 +291,37 @@ a:link{
 }
 
 .channel_top_5,
-.video_top_5{
-    position: absolute;
+.video_top_5{   
+    position: absolute; 
     width: 90%;
     left: 50%;
     transform: translate(-50%, 0);
-    padding-top: 170px;
+    margin-top: 180px;
 } 
+
+.tag_top_5{ 
+    position: absolute; 
+    width: 100%;
+    left: 50%;
+    height: 80vh;
+    transform: translate(-50%, 0);
+    margin-top: 180px; 
+} 
+
+#tooltip {
+    position: absolute; 
+    opacity: 0;
+    background-color: rgba(46, 46, 46, 0.829);
+    font-weight: bold;
+    font-family: Roboto;
+    font-size: 14pt;
+    border-radius: 2px;
+    padding: 3px;
+    pointer-events: none;
+    color: white;
+    letter-spacing: 0.25px; 
+    transform: translate(-700px, -250px);
+}
 
 .channel_list{ 
     padding-top: 10px;
@@ -316,8 +340,7 @@ a:link{
     width: 130px;
 }
 
-
-
+ 
 .video_list{
     padding-top: 18px;
     position: relative;
@@ -369,8 +392,7 @@ a:link{
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
-}
-
+} 
 
 #day_inner_chart_div{
     width: 300vw;
@@ -381,4 +403,5 @@ a:link{
     width: 0;
     height: 98vh;
 }
+ 
  
