@@ -22,12 +22,8 @@
 
 
 **Future improvements:**
-- create executable 
-- wordcloud for video tags/categories & search history:
-  - https://github.com/jasondavies/d3-cloud
-  - https://observablehq.com/@contervis/clickable-word-cloud
-- matrix chart for hour & dayofweek:
-  - https://github.com/kurkle/chartjs-chart-matrix
+- create executable  
+- top categories
 - locked y-axis graph horizontal scrolling
 - better way to parse API response 
 - loading screen (and speed up loading time, API calls bottleneck?)
