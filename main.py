@@ -9,6 +9,7 @@ import youtube_api
 import panda_man
 import time as t
 
+# fix empty x axis
 # create executable
 # bottleneck: API calls?
 # loading screen when requesting
@@ -36,9 +37,9 @@ def csv_to_json(csv_name, folder=''):
     return dicts
 
 
-@app.route('/')
-def intro():
-    return render_template('intro.html')
+# @app.route('/')
+# def intro():
+#     return render_template('intro.html')
 
 
 @app.route('/api_key_date', methods=['POST'])
@@ -58,7 +59,7 @@ def api_key():
                 panda_man.manipulate_data(api_key)
                 data = csv_to_json(
                     csv_name=['stats', 'video_hist', 'channel_hist', 'tags_hist', 'hour_hist',
-                              'month_hist', 'day_hist', 'week_hist'], folder='stats')
+                              'month_hist', 'day_hist', 'week_hist', 'week_hour_hist'], folder='stats')
                 return render_template('result.html', data=data)
             else:
                 error = "Date error"
@@ -89,9 +90,17 @@ def save_file():
     return render_template('intro.html', error=error)
 
 
+@app.route('/')
+def intro():
+    data = csv_to_json(
+        csv_name=['stats', 'video_hist', 'channel_hist', 'tags_hist', 'hour_hist',
+                  'month_hist', 'day_hist', 'week_hist', 'week_hour_hist'], folder='stats')
+    return render_template('result.html', data=data)
+
+
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-    app.run(host="127.0.0.1", port=6969)#, debug=True)
+    app.run(host="127.0.0.1", port=6969, debug=True)
 

@@ -9,6 +9,11 @@ import data_col
 AVG_WATCHTIME = 0.55  #https://uhurunetwork.com/the-50-rule-for-youtube/
 FOLDER = 'stats/'
 
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', 1000)
+pd.set_option('display.max_colwidth', None)
+pd.set_option('display.max_rows', None)
+
 
 def save_to_csv(df, name, encoding='utf-8'):
     df.to_csv(f'{FOLDER}{name}.csv', encoding=encoding)
@@ -25,8 +30,10 @@ def top_tags(watch, num=20, to_print=False, to_save=False):
         ranking_dict['tag'].append(i[0].strip("' "))
         ranking_dict['count'].append(i[1])
     ranking_df = pd.DataFrame.from_dict(ranking_dict)
+    max_count = ranking_df['count'].max().item()
+    ranking_df['size'] = (ranking_df['count']/max_count)*100
     temp_link_tags = ranking_df['tag'].str.replace(' ', '+', regex=True)
-    ranking_df['link'] = "https://www.youtube.com/results?search_query="+temp_link_tags
+    ranking_df['link'] = "https://www.youtube.com/results?search_query=" + temp_link_tags
 
     if to_print:
         print(ranking_df.to_string())
@@ -145,6 +152,61 @@ def to_do(ranking, to_print, to_save, to_disp):
         save_to_csv(ranking, f'{to_save}_hist')
 
 
+def week_hour_graph(watch, to_print=False, to_save=False):
+    week_index = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    watch['day'] = watch['date_time'].dt.day_name()
+    watch['hour'] = watch['date_time'].dt.hour
+    watch['duration'] = (watch['duration'] / 60).round(decimals=2)  # in minutes
+    watch_count = watch.groupby(['hour', 'day']).size().reset_index(name='count')
+    watch_sum = watch.groupby(['hour', 'day'])['duration'].sum().reset_index(name='duration')
+    watch = pd.merge(watch_sum, watch_count, on=['day', 'hour'])
+
+    new_rows = {'hour': [], 'day': []}
+    for i in range(24):  # add missing rows
+        temp_watch = watch[watch['hour'] == i]
+        if temp_watch.empty:
+            temp_day = []
+        else:
+            temp_day = temp_watch['day'].to_list()
+
+        if len(temp_day) < 7 :
+            for day in week_index:
+                if day not in temp_day:
+                    new_rows['day'].append(day)
+                    new_rows['hour'].append(i)
+
+    new_rows['count'] = [0] * len(new_rows['hour'])
+    new_rows['duration'] = [0] * len(new_rows['hour'])
+    new_watch = pd.DataFrame.from_dict(new_rows)
+    new_watch = pd.concat([new_watch, watch], axis=0)
+
+
+    count_percent = normalize(new_watch['count'])
+    new_watch['video_color'] = 'rgba(189, 105, 242, ' + count_percent.astype(str) + ')'
+    new_watch['day_short'] = new_watch['day'].str[:3]
+    new_watch['x_axis'] = new_watch['hour'].astype('str')
+    new_watch['x_axis'] = new_watch['x_axis'] + ':00'
+    new_watch['x_axis'] = new_watch['x_axis'].apply(hour_format)
+
+    duration_percent = normalize(new_watch['duration'])
+    new_watch['duration_color'] = 'rgba(64, 181, 217, ' + duration_percent.astype(str) + ')'
+
+    new_watch['day'] = pd.Categorical(new_watch['day'], categories=week_index, ordered=True)
+    new_watch = new_watch.sort_values(['hour','day'], ascending=[True, True])
+
+    if to_save:
+        save_to_csv(new_watch, 'week_hour_hist')
+    if to_print:
+        print(new_watch)
+    return new_watch
+
+
+def normalize(col, decimals=2):
+    max_val = col.max()
+    min_val = col.min()
+    return ((col-min_val)/(max_val-min_val)).round(decimals=decimals) #normalized=(df-df.mean())/df.std()
+
+
 def month_graph(watch, to_print=False, to_save=False):
     unique_val = watch['month'].unique().tolist()
     new_month = []
@@ -186,6 +248,7 @@ def hour_graph(watch, to_print=False, to_save=False):
     hour_merged['duration'] = convert_seconds_to(hour_merged['duration'], 'm', 2)
     hour_merged['hour'] = hour_merged['hour'].astype('int').astype('str')
     hour_merged['x_axis'] = hour_merged['hour'] + ':00'
+    hour_merged['x_axis'] = hour_merged['x_axis'].apply(hour_format)
 
     if to_print:
         print(hour_merged)
@@ -212,13 +275,18 @@ def day_graph(watch, to_print=False, to_save=False):
     return day_merged
 
 
+def hour_format(hour):
+    if len(hour) < 5:
+        hour = '0' + hour
+    return hour
+
 def week_graph(watch, to_print=False, to_save=False):
     watch['day'] = watch['date_time'].dt.day_name()
     week_duration = watch.groupby(['day'])['duration'].sum().reset_index()
     week_count = watch.groupby(['day']).size().reset_index(name='count')
     week_merged = pd.merge(week_count, week_duration)  # pd.concat([month_duration, month_count], join='inner', axis=1, ignore_index=True)
     week_merged['duration'] = convert_seconds_to(week_duration['duration'], 'm', 2)
-    week_index = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    week_index = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     week_merged['day'] = pd.Categorical(week_merged['day'], categories=week_index, ordered=True)
     week_merged = week_merged.sort_values('day')
     week_merged['x_axis'] = week_merged['day']
@@ -330,9 +398,10 @@ def manipulate_data(dev_key):
         week_graph(watch_hist, to_save=True)
         month_graph(watch_hist, to_save=True)
         day_graph(watch_hist, to_save=True)
+        week_hour_graph(watch_hist, to_print=False, to_save=True)
         top_video(watch_hist, 5, to_save=True)
         top_channel(watch_hist, dev_key, 5, to_save=True)
-        top_tags(watch_hist, num=20, to_save=True)
+        top_tags(watch_hist, num=100, to_save=True)
         # top_category(watch_hist, to_save=True, to_print=False)
         # min_max_date(watch_hist)
         return True
@@ -340,3 +409,5 @@ def manipulate_data(dev_key):
     except Exception as e:
         print(e)
         return False
+
+
