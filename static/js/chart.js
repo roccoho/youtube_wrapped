@@ -107,16 +107,13 @@ function createOption(graph_data, graph_type, graph_title, scale){
 }
 
 function destroyChart(){
-    let chartStatus = Chart.getChart("normal_chart"); // <canvas> id
-    if (chartStatus != undefined) {
-      chartStatus.destroy();
-    }
-    let chartStatus2 = Chart.getChart("day_chart"); // <canvas> id
-    if (chartStatus2 != undefined) {
-      chartStatus2.destroy();
-    }
+    ['normal_chart', "day_chart"].forEach(function(cur_chart){ 
+        let chartStatus = Chart.getChart(cur_chart); // <canvas> id
+        if (chartStatus != undefined) {
+            chartStatus.destroy();
+        }
+    }); 
 }
-
 
 function updateColor(other_radios, current_button){
         for(let i = 0; i < other_radios.length; i++){
@@ -162,7 +159,7 @@ function updateAnchor(anchor_id){
 function chooseGraph(radio_id){ 
     destroyChart();  
 
-    if(!radio_id){
+    if(!radio_id){  //default selection
         radio_id_y = 'both_radio';
         radio_id_chart = 'line_chart';
         radio_id_graph = 'graph_year';
@@ -202,11 +199,12 @@ function chooseGraph(radio_id){
     if (selected_chart == 'day_hist'){
         graph_title = 'Daily Analytics';
         var myChart = document.getElementById("day_chart").getContext('2d');
-        scroll_chart_div.style.display = "block";
+        scroll_chart_div.style.display = "block"; 
         normal_chart_div.style.display = "none";
-    }else{
+    } 
+    else{
         var myChart = document.getElementById("normal_chart").getContext('2d');
-        scroll_chart_div.style.display = "none";
+        scroll_chart_div.style.display = "none"; 
         normal_chart_div.style.display = "block";
         if (selected_chart == 'hour_hist'){
             graph_title = 'Hourly Analytics';
@@ -214,14 +212,118 @@ function chooseGraph(radio_id){
         else if (selected_chart == 'week_hist'){
             graph_title = 'Weekly Analytics';
         }
-        else{
+        else if (selected_chart == 'month_hist'){
             graph_title = 'Monthly Analytics';
+        } 
+        else if (selected_chart == 'week_hour_hist'){
+            graph_title = 'Week/Hour Analytics';
         }
     }
 
-    let chart_scale = createScale(y_id, selected_chart);
-    var chart = new Chart(myChart, createOption(graph_data, chart_type, graph_title, chart_scale));
+    if(selected_chart == 'week_hour_hist'){   
+        if(y_axis_type == 'watch'){
+            values = data_['duration'];
+            values = values.map(v=> v + ' minutes'); 
+            color = data_["duration_color"];
+            border_color = 'rgba(64, 181, 217, 1)';
+        }else{ 
+            values = data_['count'];
+            values = values.map(v=> 'count: ' + v); 
+            color = data_["video_color"];
+            border_color = "rgba(189, 105, 242, 1)";
+        } 
+        
+        var new_data = []; 
+  
+        for(let i=0; i < data_['day'].length; i++){
+            new_data.push({x: data_['x_axis'][i], 
+                           y: data_['day_short'][i], 
+                           value: values[i], 
+                           long_day: data_['day'][i]});
+        }
+        
+        var chart = new Chart(myChart, {
+            type: 'matrix',
+            data: {
+              datasets: [{ 
+                data: new_data,
+                backgroundColor: color, 
+                borderColor: border_color,
+                borderWidth: 1,
+                width: ({chart}) => (chart.chartArea || {}).width / 24 - 1,
+                height: ({chart}) =>(chart.chartArea || {}).height / 7 - 1
+              }]
+            }, 
+            options: {
+              layout: {
+                padding: { 
+                    top: 100,
+                    right: 200
+                    }
+                },  
+              maintainAspectRatio: false,
+              responsive: true, 
+              plugins:{ 
+                title: {
+                    display: true,
+                    text: graph_title,
+                    align: 'start',
+                    font: {
+                        size: 25,
+                    }
+                },
+                legend: {
+                    display: false, //set to false
+                    position: 'top',
+                    align: 'end',
+                    title: {
+                        text: 'Videos' //not working
+                    },
+                    labels: {
+                        color: white
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label(context){
+                            const v = context.dataset.data[context.dataIndex];    
+                            return ['x: ' + v['x'], 'y: ' + v['long_day'], v['value']];
+                        }
+                    }
+                } 
+              },
+              scales: {
+                x: {
+                  type: 'category',
+                  labels: get_label(data_['x_axis']),
+                  display: true,   
+                  offset: true,     
+                  grid: {
+                      display: false
+                  }
+                },
+                y: {
+                  labels: get_label(data_['day_short']),
+                  type: 'category',
+                  display: true, 
+                  offset: true,        
+                  grid: {
+                      display: false
+                  }
+                }
+              }
+            }
+          });
+
+    }
+    else{
+        let chart_scale = createScale(y_id, selected_chart);
+        var chart = new Chart(myChart, createOption(graph_data, chart_type, graph_title, chart_scale));
+    }
 }
 
 
+function get_label(axis_label){ 
+    return [... new Set(axis_label)]
+  }
 

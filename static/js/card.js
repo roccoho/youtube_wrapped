@@ -137,13 +137,75 @@ function active_arrow(){
 }
 
 function tag(data){
-    data = data['tags_hist'];
-    var chart_data = [];
-    for(let i=0; i < data['tag'].length; i++){
-        chart_data.push({x: data['tag'][i], value: data['count'][i]});
-    }
-    console.log(chart_data);
-    var any_chart = anychart.tagCloud(chart_data);  
-    any_chart.container("tag_top_5");
-    any_chart.draw();
+    data = data['tags_hist']; 
+    sizes = data['size'].map(function(value){ //normalize scale
+        return (50*value/100)+1; //minimum 1, maximum: 1+50 
+    });
+    dict = data['tag'].map((words, i)=>{ 
+        return {word: words, size: sizes[i], link: data['link'][i], count: data['count'][i]}
+    });  
+
+    let height = document.getElementById('tag_top_5').clientHeight;
+    let width = document.getElementById('tag_top_5').clientWidth;  
+    
+    var svg = d3.select("#tag_top_5").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g");
+
+    var layout = d3.layout.cloud()
+                .size([width, height])
+                .words(dict)
+                .padding(5)  //space between words
+                .rotate(0)  //function() { return ~~(Math.random() * 2) * 90; })
+                .font('Roboto')
+                .fontSize(function(d) { return d.size; }) 
+                .text(function(d) { return d.word })
+                .on("end", draw);
+    layout.start();
+
+    function draw(words) {  
+        d3.select('#tag_top_5')
+          .append('div')
+          .attr('id', 'tooltip'); 
+
+        svg
+          .append("g")
+            .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+            .selectAll("text")
+            .data(words)
+            .enter().append("text") 
+            .attr("font-size", function(d) { return d.size; })
+            .attr("text-anchor", "middle")
+            .attr("font-family", "Roboto")
+            .attr("fill", "#FFFFFF")
+            .attr("transform", function(d) { 
+                return "translate(" + [d.x, d.y] + ")";//rotate(" + d.rotate + ")";
+            })
+            .text(function(d) { return d.word; })    
+            .on("click", function (event, d){  
+                window.open(d.link, "_blank");
+            })
+            .on("mouseover", function (event, d){
+                d3.select(this)
+                .attr("cursor", "pointer")
+                .style("font-size", d.size + 10)
+                .attr("font-weight", "bold"); 
+                
+                d3.select('#tooltip')
+                .style('opacity', 1)
+                .text(`${d.count} videos`)
+                .style('left', (event.pageX) + 'px')
+                .style('top', (event.pageY) + 'px'); 
+            })
+            .on("mouseout", function (event, d){ 
+                d3.select(this)
+                .style("font-size", d.size)
+                .attr("font-weight", "normal");
+
+                d3.select('#tooltip')
+                .style('opacity', 0); 
+            });
+      } 
 }
+ 
