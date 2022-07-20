@@ -5,7 +5,7 @@
     <div id="day_inner_chart_div">
         <canvas id="day_chart"></canvas>
     </div>
-</div>
+</div> 
 
 <script>
 var main_color = 'rgba(189, 105, 242, 1)';
@@ -20,12 +20,11 @@ Chart.defaults.font.size = 18;
 Chart.defaults.color = white;
 
 normal_chart_div = document.getElementById("normal_chart_div");
-scroll_chart_div = document.getElementById("day_chart_div");
-
+scroll_chart_div = document.getElementById("day_chart_div"); 
 const y_axis_type_divs = ['video_radio', 'watch_radio', 'both_radio'];
 const chart_type_divs = ['line_chart', 'bar_chart'];
 const anchor_divs = ['summary_anc','graph_anc'];
-const graph_type_divs = ['graph_month', 'graph_week', 'graph_hour', 'graph_year'];
+const graph_type_divs = ['graph_month', 'graph_week', 'graph_hour', 'graph_year', 'graph_week_hour'];
 chooseGraph();
 updateAnchor(); 
 </script> 
