@@ -23,6 +23,7 @@ import panda_man
 # maybe remove read write of json/csv files
 # handle different dates in html file: ignore
 
+UPLOAD_FOLDER = 'uploads/'
 app = Flask(__name__)
 
 def csv_to_json(csv_name, folder=''):
@@ -74,8 +75,8 @@ def save_file():
         filename = secure_filename(f.filename)
         file_type = filename.split('.').pop();
         if file_type == 'json':
-            f.save(app.config['UPLOAD_FOLDER'] + filename)
-            dates = data_col.watch_hist_json_to_csv(f'{app.config["UPLOAD_FOLDER"]}{filename}')
+            f.save(UPLOAD_FOLDER + filename)
+            dates = data_col.watch_hist_json_to_csv(f'{UPLOAD_FOLDER}{filename}')
 
             if dates:
                 return render_template('api_key.html', dates=dates)
@@ -99,7 +100,6 @@ def save_file():
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
-    app.config['UPLOAD_FOLDER'] = 'uploads/'
     print
     app.run(debug=False)
 
