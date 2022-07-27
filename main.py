@@ -74,8 +74,8 @@ def save_file():
         filename = secure_filename(f.filename)
         file_type = filename.split('.').pop();
         if file_type == 'json':
-            f.save(UPLOAD_FOLDER + filename)
-            dates = data_col.watch_hist_json_to_csv(f'{UPLOAD_FOLDER}{filename}')
+            f.save(app.config['UPLOAD_FOLDER'] + filename)
+            dates = data_col.watch_hist_json_to_csv(f'{app.config["UPLOAD_FOLDER"]}{filename}')
 
             if dates:
                 return render_template('api_key.html', dates=dates)
@@ -97,8 +97,9 @@ def save_file():
 
 
 if __name__ == "__main__":
-    UPLOAD_FOLDER = 'uploads/'
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
+    app.config['UPLOAD_FOLDER'] = 'uploads/'
+    print
     app.run(debug=False)
 
