@@ -1,13 +1,10 @@
-beautifulsoup4==4.11.1
+beautifulsoup4==4.11.1 
 Flask==2.1.2
 google_api_python_client==2.55.0
 isodate==0.6.1
-matplotlib==3.5.2
-mysql_connector_repackaged==0.3.1
+matplotlib==3.5.2 
 numpy==1.22.3
 pandas==1.4.1
 pandasql==0.7.3
-pytz==2022.1
-SQLAlchemy==1.4.35
+pytz==2022.1 
 Werkzeug==2.1.2
-gunicorn

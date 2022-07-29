@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, flash, redirect
+from flask import Flask, render_template, url_for, request, flash, redirect, jsonify
 import urllib.request
 import os
 import pandas as pd
@@ -7,24 +7,23 @@ from werkzeug.utils import secure_filename
 import data_col
 import youtube_api
 import panda_man
+from threading import Thread
+import time
 
 # fix empty x axis
+# x axis offset
 # create executable
 # bottleneck: API calls?
-# loading screen when requesting
-# setup server?
 # oauth for project id?
-# wordcloud for video tags/categories & search history:
-#  https://github.com/jasondavies/d3-cloud
-#  https://observablehq.com/@contervis/clickable-word-cloud
-# matrix chart for hour & dayofweek:
-#  https://github.com/kurkle/chartjs-chart-matrix
 # better way to parse response
 # maybe remove read write of json/csv files
 # handle different dates in html file: ignore
 
+finished = False
+th = Thread()
 UPLOAD_FOLDER = 'uploads/'
 app = Flask(__name__)
+
 
 def csv_to_json(csv_name, folder=''):
     dicts = {}
@@ -41,8 +40,30 @@ def intro():
     return render_template('intro.html')
 
 
+def get_api(api_key):
+    global finished
+    response = data_col.get_info(api_key)
+    data_col.video_json_to_csv(response)
+    panda_man.manipulate_data(api_key)
+    finished = True
+
+
+@app.route('/result')
+def result():
+    data = csv_to_json(
+        csv_name=['stats', 'video_hist', 'channel_hist', 'tags_hist', 'hour_hist',
+                  'month_hist', 'day_hist', 'week_hist', 'week_hour_hist'], folder='stats')
+    return render_template('result.html', data=data)
+
+
+@app.route('/status')
+def thread_status():
+    # Return the status of the worker thread
+    return jsonify(dict(status=('finished' if finished else 'running')))
+
+
 @app.route('/api_key_date', methods=['POST'])
-def api_key():
+def api_key_date():
     if request.method == 'POST':
         api_key = request.form['api_key']
         datefrom = request.form['datefrom']
@@ -53,13 +74,12 @@ def api_key():
         if test_id:  # test if project id works
             dates = data_col.filter_watch_hist_date(datefrom, dateto)
             if dates:
-                response = data_col.get_info(api_key)
-                data_col.video_json_to_csv(response)
-                panda_man.manipulate_data(api_key)
-                data = csv_to_json(
-                    csv_name=['stats', 'video_hist', 'channel_hist', 'tags_hist', 'hour_hist',
-                              'month_hist', 'day_hist', 'week_hist', 'week_hour_hist'], folder='stats')
-                return render_template('result.html', data=data)
+                global th
+                global finished
+                finished = False
+                th = Thread(target=get_api, args=(api_key,))
+                th.start()
+                return render_template('loading.html')
             else:
                 error = "Date error"
         else:
@@ -73,7 +93,7 @@ def save_file():
     if request.method == 'POST':
         f = request.files['file']
         filename = secure_filename(f.filename)
-        file_type = filename.split('.').pop();
+        file_type = filename.split('.').pop()
         if file_type == 'json':
             f.save(UPLOAD_FOLDER + filename)
             dates = data_col.watch_hist_json_to_csv(f'{UPLOAD_FOLDER}{filename}')
@@ -100,5 +120,5 @@ def save_file():
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
-    app.run(debug=False)
+    app.run(debug=True)
 
