@@ -50,6 +50,8 @@ def get_api(api_key):
 
 @app.route('/result')
 def result():
+    global finished
+    finished = False
     data = csv_to_json(
         csv_name=['stats', 'video_hist', 'channel_hist', 'tags_hist', 'hour_hist',
                   'month_hist', 'day_hist', 'week_hist', 'week_hour_hist'], folder='stats')
