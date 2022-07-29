@@ -32,3 +32,4 @@ https://youtubewrap.herokuapp.com/
 - speed up loading time, API calls bottleneck? 
 - oauth for api key?
 - handle different dates in html file: probably not
+- what happens if there are concurrent users? no idea
