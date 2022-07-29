@@ -26,11 +26,9 @@ https://youtubewrap.herokuapp.com/
 
 
 **Future improvements:**
-- create executable  
 - top categories
 - locked y-axis graph horizontal scrolling
 - better way to parse API response 
-- loading screen (and speed up loading time, API calls bottleneck?)
-- setup server?
+- speed up loading time, API calls bottleneck? 
 - oauth for api key?
 - handle different dates in html file: probably not
