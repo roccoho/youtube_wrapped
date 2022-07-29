@@ -8,3 +8,4 @@ pandas==1.4.1
 pandasql==0.7.3
 pytz==2022.1 
 Werkzeug==2.1.2
+gunicorn
