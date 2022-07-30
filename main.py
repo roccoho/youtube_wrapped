@@ -9,6 +9,8 @@ import youtube_api
 import panda_man
 from threading import Thread
 import time
+import shutil
+import os
 
 # fix empty x axis
 # x axis offset
@@ -52,6 +54,10 @@ def get_api(api_key):
 def result():
     global finished
     finished = False
+    # delete folder and recreate to clear folder contents
+    shutil.rmtree(UPLOAD_FOLDER, ignore_errors=True)
+    os.mkdir(UPLOAD_FOLDER)
+
     data = csv_to_json(
         csv_name=['stats', 'video_hist', 'channel_hist', 'tags_hist', 'hour_hist',
                   'month_hist', 'day_hist', 'week_hist', 'week_hour_hist'], folder='stats')
@@ -116,7 +122,7 @@ def save_file():
 #     data = csv_to_json(
 #         csv_name=['stats', 'video_hist', 'channel_hist', 'tags_hist', 'hour_hist',
 #                   'month_hist', 'day_hist', 'week_hist', 'week_hour_hist'], folder='stats')
-#     return render_template('.html', data=data)
+#     return render_template('result.html', data=data)
 
 
 if __name__ == "__main__":
