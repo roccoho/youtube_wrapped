@@ -21,8 +21,8 @@ https://youtubewrap.herokuapp.com/
 
 
 **[Youtube Wrapped](https://youtubewrap.herokuapp.com/) Requires:**
-- API key with [YouTube Data API v3](https://console.cloud.google.com/marketplace/product/google/youtube.googleapis.com?q=search&referrer=search&project=youtube-347807) enabled
-- Youtube *watch-history.json* from [Google Takeout](https://takeout.google.com/settings/takeout)
+- [API key with YouTube Data API v3](https://console.cloud.google.com/marketplace/product/google/youtube.googleapis.com?q=search&referrer=search&project=youtube-347807) enabled
+- [Youtube *watch-history.json* from Google Takeout](https://takeout.google.com/settings/takeout)
 
 
 **Future improvements:**
