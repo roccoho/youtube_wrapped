@@ -5,27 +5,56 @@ body{
     background-color: rgb(24, 24, 24);
 }
 
-#result_body {
-    height: 200vh;
-}
-
 label,
 a,
 p {
     color: white;
     font-family: Roboto;
     font-size: 13px;
-    target: "_blank";
+}
+ 
+
+#result_body {
+    height: 200vh;
+}/*if bugged, maybe put this before label, a, p*/
+
+
+.help_button{ 
+    text-decoration: underline;
+    font-size: 18px;
+    font-family: Roboto; 
 }
 
+.help_button:hover{
+    color: rgb(56, 56, 56);
+}
+
+.source_footer{ 
+    bottom: 0%;
+    position: absolute;
+    left: 50%;
+    bottom: 5%; 
+    transform: translate(-50%, 0); 
+}
+
+#loading_gif{
+    display: block;
+    margin-left: auto;
+    margin-right: auto; 
+    height: 50px;
+}
+
+
 .absolute_center{
+    text-align-last: center;
     position: absolute;
     left: 50%;
     top: 50%; 
     transform: translate(-50%, -50%); 
 }
 
-input[type='file'],
+.absolute_center input[type='file'],
+.absolute_center a,
 .absolute_center p,
 .absolute_center label{
     font-size: 20px;
@@ -33,10 +62,17 @@ input[type='file'],
     font-family: Roboto;
 }
 
+
+.text_left_align{  
+    text-align-last: left;
+}
+ 
+
 #submit_div{
     display: flex;
     justify-content: center;
 }
+
 
 #side_bar_div label{
     cursor: pointer;
@@ -59,7 +95,8 @@ input[type='file'],
 }
 
 .each_radio:hover,
-.anchor_button:hover{
+.anchor_button:hover,
+.source_side_bar:hover{
     background-color: rgb(56, 56, 56) !important; /*76*/
 }
 
@@ -70,6 +107,18 @@ input[type='file'],
     text-align: left;
     color: white;
     font-size: 25px;
+    border: none;
+    background-color: rgb(33, 33, 33);
+    cursor: pointer; 
+}
+
+.source_side_bar {
+    padding-left: 20px;
+    height: 40px;
+    width: 100%;
+    font-size: 20px;
+    text-align: left;
+    color: white; 
     border: none;
     background-color: rgb(33, 33, 33);
     cursor: pointer; 
@@ -198,7 +247,7 @@ input[type='file'],
     font-size: 18px;
 }
 
-a:link{
+.vertical a:link{
     text-decoration: none;
 }
 
