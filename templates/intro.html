@@ -11,11 +11,15 @@
     <div class="absolute_center">
         {% if error %}
         <p class=error><strong>Error:</strong> {{ error }}
-        {% endif %}  
-
+        {% endif %}   
         <form action = "/display" method = "POST" enctype = "multipart/form-data" autocomplete="off">
             <input type = "file" name="file" id="file_input" onchange="this.form.submit()"/>  
-        </form>  
+        </form>
+        <br>
+        <a href="https://github.com/roccoho/youtube_wrapped/wiki/Requesting-Youtube-watch-history.json-from-Google-Takeout" title="github wiki" class="help_button" target= "_blank">?help</a> 
     </div> 
+    <div class="source_footer"> 
+        <a href="https://github.com/roccoho/youtube_wrapped" title='github' class="help_button" target= "_blank">Source code</a>
+    </div>
 </body>
 </html>

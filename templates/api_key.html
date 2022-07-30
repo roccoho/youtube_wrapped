@@ -4,37 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename='styles/style.css')}}">
-    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='styles/style.css')}}"> 
 </head>
 <body>
     <div class="absolute_center">   
         {% if error %}
         <p class=error><strong>Error:</strong> {{ error }}
         {% endif %}  
-        <p>Select date range:</p> 
+        <div class="text_left_align">   
+            <p>Select date range:</p> 
+        </div>
         <form action = "/api_key_date" method = "POST">
             <label for="datefrom">From: </label> 
             <input type="date" id="datefrom" name="datefrom"/> 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label for="dateto">To: </label>
-            <input type="date" id="dateto" name="dateto"/> <br><br>
-    
-            <label for="api_key">API key: </label>
-            <input type="text" id="api_key" name="api_key"><br><br>
+            <input type="date" id="dateto" name="dateto"/> <br>
+            <br> 
+            <div class="text_left_align">
+                <label for="api_key" id="api_key_label">API key: </label>
+                <input type="text" id="api_key_input" name="api_key"><br><br>
+            </div>
             <div id="submit_div">
-                <input type="submit">
+                <input type="submit" style="font-size:15px;">
             </div> 
         </form>
-    </div> 
-
+        <br>
+        <a title="github wiki" href="https://github.com/roccoho/youtube_wrapped/wiki/Enabling-Youtube-Data-API-v3" class="help_button" target= "_blank">?help</a> 
+    </div>  
+    <div class="source_footer"> 
+        <a href="https://github.com/roccoho/youtube_wrapped" title='github' class="help_button" target= "_blank">Source code</a>
+    </div>
+    
     <script>
-    var dates_ = {{dates|tojson}}; 
-    datefrom = document.getElementById('datefrom');
-    datefrom.value = datefrom.min = dateto.min = dates_[0]; 
-    dateto = document.getElementById('dateto');
-    dateto.value = datefrom.max = dateto.max = dates_[1]; 
-
+        var dates_ = {{dates|tojson}}; 
+        datefrom = document.getElementById('datefrom');
+        datefrom.value = datefrom.min = dateto.min = dates_[0]; 
+        dateto = document.getElementById('dateto');
+        dateto.value = datefrom.max = dateto.max = dates_[1];  
     </script>
 </body>
 </html>
