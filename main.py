@@ -22,7 +22,9 @@ import os
 # handle different dates in html file: ignore
 
 finished = False
+finished1 = False
 th = Thread()
+th1 = Thread()
 UPLOAD_FOLDER = 'uploads/'
 app = Flask(__name__)
 
@@ -39,6 +41,10 @@ def csv_to_json(csv_name, folder=''):
 
 @app.route('/')
 def intro():
+    global finished1
+    finished1 = False
+    global finished
+    finished = False
     return render_template('intro.html')
 
 
@@ -64,15 +70,27 @@ def result():
     return render_template('result.html', data=data)
 
 
+@app.route('/status1')
+def thread_status1():
+    if finished1 is not False:
+        cur_status = 'finished'
+    else:
+        cur_status = 'running'
+    return jsonify(dict(status=cur_status))
+
+
 @app.route('/status')
 def thread_status():
     # Return the status of the worker thread
     return jsonify(dict(status=('finished' if finished else 'running')))
 
 
-@app.route('/api_key_date', methods=['POST'])
+@app.route('/api_key_date', methods=['GET', 'POST'])
 def api_key_date():
+    error = None
     if request.method == 'POST':
+        global finished1
+        finished1 = False
         api_key = request.form['api_key']
         datefrom = request.form['datefrom']
         dateto = request.form['dateto']
@@ -93,24 +111,35 @@ def api_key_date():
         else:
             error = "Invalid API key"
 
+    else:
+        dates = finished1
+        if not dates:
+            return render_template('intro.html', error='wrong JSON file')
+
     return render_template('api_key.html', dates=dates, error=error)
+
+
+def get_dates(filename):
+    global finished1
+    finished1 = data_col.watch_hist_json_to_csv(filename)
 
 
 @app.route('/display', methods=['POST'])
 def save_file():
+    error = None
     if request.method == 'POST':
         f = request.files['file']
         filename = secure_filename(f.filename)
         file_type = filename.split('.').pop()
         if file_type == 'json':
-            f.save(UPLOAD_FOLDER + filename)
-            dates = data_col.watch_hist_json_to_csv(f'{UPLOAD_FOLDER}{filename}')
-
-            if dates:
-                return render_template('api_key.html', dates=dates)
-            else:
-                error = 'Wrong JSON file'
-
+            final_filename = UPLOAD_FOLDER + filename
+            f.save(final_filename)
+            global th1
+            global finished1
+            finished1 = False
+            th1 = Thread(target=get_dates, args=(final_filename,))
+            th1.start()
+            return render_template('upload_loading.html')
         else:
             error = 'Incorrect file type'
 
