@@ -8,8 +8,8 @@
   </head>
   <body>
     <div class="absolute_center">
-        <img src="https://i.gifer.com/ZZ5H.gif" id="loading_gif"/> 
-        <p>Loading results...</p>
+        <img src="https://i.gifer.com/ZZ5H.gif" id="loading_gif"/>
+        <p>Uploading...</p>
         <p>Loading time depends on the size of your watch history so please BE PATIENT!</p> 
         <p>it is working... TRUST</p> 
     </div>
@@ -22,10 +22,11 @@
     $(document).ready(function() {
       var refresh_id = setInterval(function() {
           $.get(
-            "{{ url_for('thread_status') }}",
+            "{{ url_for('thread_status1') }}",
             function(data) { 
-              if (data.status == 'finished') {
-                window.location.replace("/result");
+              console.log(data);
+              if (data.status != 'running') {
+                window.location.replace("/api_key_date");
               }
             }
           )}
