@@ -155,8 +155,14 @@ function updateAnchor(anchor_id){
 //     document.getElementById(div_id).style.backgroundColor = transparent;
 // }
 
+function goToAnchor() {
+    var loc = document.location.toString().split('#')[0];
+    document.location = loc + '#' + 'graph_div';
+    return false;
+  }
 
-function chooseGraph(radio_id){ 
+
+function chooseGraph(radio_id){  
     destroyChart();  
 
     if(!radio_id){  //default selection
@@ -167,6 +173,7 @@ function chooseGraph(radio_id){
         updateColor(graph_type_divs, radio_id_graph);
         updateColor(y_axis_type_divs, radio_id_y);
     }else{
+        goToAnchor();
         if (chart_type_divs.includes(radio_id)){
             updateColor(chart_type_divs, radio_id);
         }else if(y_axis_type_divs.includes(radio_id)){
