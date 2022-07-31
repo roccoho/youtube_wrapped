@@ -12,6 +12,7 @@
         {% if error %}
         <p class=error><strong>Error:</strong> {{ error }}
         {% endif %}   
+        <p>Upload your <em>watch-history.json</em> here:</p>
         <form action = "/display" method = "POST" enctype = "multipart/form-data" autocomplete="off">
             <input type = "file" name="file" id="file_input" onchange="this.form.submit()"/>  
         </form>
