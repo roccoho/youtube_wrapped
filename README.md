@@ -25,6 +25,7 @@
 
 
 **Future improvements:**
+- it looks horrible on smaller screens 
 - top categories
 - locked y-axis graph horizontal scrolling
 - better way to parse API response 
