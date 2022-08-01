@@ -141,7 +141,7 @@ p {
 .vertical {
     background-color: rgb(15, 15, 15);
     left: 50%;
-    position: absolute;
+    position: relative;
     transform: translate(-50%, 0);
     height: 100vh;
     width: 59vh; /*ratio: 1080*1920*/
@@ -149,10 +149,18 @@ p {
 }
 
 .youtube_header {
-    left: 50%;
-    position: fixed;
-    transform: translate(-50%, 0);
-    font-size: 30px;
+    left: 50%; 
+    position: relative;
+    transform: translate(-50%, 2vh);   
+}
+
+#tag_top_tag_img,
+#video_top_video_img,
+#channel_top_channel_img,
+#youtube_header_img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #right_arrow{
@@ -182,7 +190,7 @@ p {
 }
 
 .summary_watched_header{
-    transform: translate(0, 30%);
+    transform: translate(0, 5vh);
     position: relative;
 }
 
@@ -193,7 +201,8 @@ p {
 }
 
 .all_top_5s{
-    transform: translate(0, 100%);
+    position: relative;
+    transform: translate(0, 8vh);
 }
 
 .summary_top_header{
@@ -227,7 +236,7 @@ p {
     padding-left: 10px;
     padding-right: 10px;
     margin: 0;
-    position: absolute;
+    position: relative;
     display: grid;
     grid-gap: 10px;
     row-gap: 10px;
@@ -266,11 +275,9 @@ p {
 
 .tag_top_tag,
 .video_top_video,
-.channel_top_channel {
-    width: 100%;
-    text-align: center;
-    padding-top: 100px;
-    position: absolute;
+.channel_top_channel {  
+    position: relative; 
+    transform: translateY(5vh);   
 }
 
 .video_top_video > p,
@@ -338,23 +345,21 @@ p {
     padding-left: 10px;
     grid-area: img;
 }
-
+ 
 .channel_top_5,
 .video_top_5{   
-    position: absolute; 
+    position: relative; 
     width: 90%;
     left: 50%;
-    transform: translate(-50%, 0);
-    margin-top: 180px;
+    transform: translate(-50%, 10vh);
 } 
 
 .tag_top_5{ 
-    position: absolute; 
+    position: relative; 
     width: 100%;
     left: 50%;
-    height: 80vh;
-    transform: translate(-50%, 0);
-    margin-top: 180px; 
+    height: 90vh;
+    transform: translate(-50%, 4vh); 
 } 
 
 #tooltip {
@@ -425,6 +430,11 @@ p {
 #card_div{
     position: relative;
     height: 100vh;
+}
+
+#summary{
+    height: 100vh;
+    position: relative;
 }
 
 #normal_chart_div{
