@@ -155,9 +155,9 @@ function updateAnchor(anchor_id){
 //     document.getElementById(div_id).style.backgroundColor = transparent;
 // }
 
-function goToAnchor() {
+function goToAnchor(anchor) {
     var loc = document.location.toString().split('#')[0];
-    document.location = loc + '#' + 'graph_div';
+    document.location = loc + '#' + anchor;
     return false;
   }
 
@@ -166,6 +166,7 @@ function chooseGraph(radio_id){
     destroyChart();  
 
     if(!radio_id){  //default selection
+        goToAnchor('chart_div');
         radio_id_y = 'both_radio';
         radio_id_chart = 'line_chart';
         radio_id_graph = 'graph_year';
@@ -173,7 +174,7 @@ function chooseGraph(radio_id){
         updateColor(graph_type_divs, radio_id_graph);
         updateColor(y_axis_type_divs, radio_id_y);
     }else{
-        goToAnchor();
+        goToAnchor('graph_div');
         if (chart_type_divs.includes(radio_id)){
             updateColor(chart_type_divs, radio_id);
         }else if(y_axis_type_divs.includes(radio_id)){
