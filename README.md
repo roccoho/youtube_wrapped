@@ -3,7 +3,7 @@
 **Working link:** https://youtubewrap.herokuapp.com/  
 (please be patient because it is ran on a free tier Heroku server TT)
 
-**Inspirations:** 
+**References:** 
 - https://github.com/A3M4/YouTube-Report
 - https://github.com/Sank6/YouTube-Wrapped
 
