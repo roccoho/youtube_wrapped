@@ -1,7 +1,7 @@
 # Youtube Wrapped  
 
-**Working link:** https://youtubewrap.herokuapp.com/  
-(please be patient because it is ran on a free tier Heroku server TT)
+**Working link:** https://roccoho.pythonanywhere.com/ (https://youtubewrap.herokuapp.com/ will no longer be supported ☹)
+(please be patient because it is ran on a free tier)
 
 **References:** 
 - https://github.com/A3M4/YouTube-Report
