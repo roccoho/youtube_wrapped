@@ -7,7 +7,7 @@ import youtube_api
 import data_col
 
 AVG_WATCHTIME = 0.55  #https://uhurunetwork.com/the-50-rule-for-youtube/
-FOLDER = 'stats/'
+FOLDER = './stats/'
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 1000)
@@ -179,7 +179,6 @@ def week_hour_graph(watch, to_print=False, to_save=False):
     new_rows['duration'] = [0] * len(new_rows['hour'])
     new_watch = pd.DataFrame.from_dict(new_rows)
     new_watch = pd.concat([new_watch, watch], axis=0)
-
 
     count_percent = normalize(new_watch['count'])
     new_watch['video_color'] = 'rgba(189, 105, 242, ' + count_percent.astype(str) + ')'

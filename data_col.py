@@ -7,11 +7,11 @@ import youtube_api
 import os
 import pytz
 
-WATCH_HIST_CSV = 'watch_hist.csv'
-VIDEO_RESPONSE_JSON = 'video_response.json'
-CHANNEL_RESPONSE_JSON = 'channel_response.json'
-VIDEO_INFO_CSV = 'video_info.csv'
-CHANNEL_INFO_CSV = 'channel_info.csv'
+WATCH_HIST_CSV = 'uploads/watch_hist.csv'
+VIDEO_RESPONSE_JSON = 'uploads/video_response.json'
+CHANNEL_RESPONSE_JSON = 'uploads/channel_response.json'
+VIDEO_INFO_CSV = 'uploads/video_info.csv'
+CHANNEL_INFO_CSV = 'uploads/channel_info.csv'
 YEAR = 2021
 
 
@@ -70,7 +70,7 @@ def filter_watch_hist_date(earliest, latest):
         latest = latest.strftime('%Y-%m-%d')
         df = df[(df['date_time']>=earliest) & (df['date_time']<=latest)]
         df.to_csv(WATCH_HIST_CSV, encoding='utf-8-sig', index=False)
-        print(len(df))
+        print(f"size after filter: {len(df)}")
         return True
 
     except Exception as e:
@@ -290,10 +290,10 @@ def get_info(dev_key):
         watch_hist = watch_hist.drop_duplicates(subset=['videoId'], ignore_index=True)
         watch_hist = watch_hist[watch_hist['videoId'].notna()]
         watch_hist = watch_hist[watch_hist['channelId'].notna()]
-        print(len(watch_hist))
+        print(f"original length: {len(watch_hist)}")
 
         string_list = get_append_string(watch_hist['videoId'].to_list())
-        print(len(string_list))
+        print(f"50*({len(string_list)}) = youtube api calls")
         # delete_file_if_exist(VIDEO_RESPONSE_JSON)
         response_list = []
         for i in string_list:

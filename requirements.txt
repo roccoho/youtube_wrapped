@@ -1,4 +1,4 @@
-beautifulsoup4==4.11.1 
+beautifulsoup4==4.11.1
 Flask==2.1.2
 google_api_python_client==2.55.0
 isodate==0.6.1 
