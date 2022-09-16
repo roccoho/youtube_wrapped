@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      var messages = {{ messages | safe }};
+      for (var i=0; i<messages.length; i++) {
+        alert(messages[i]);
+      }
+    </script>
+  {% endif %}
+{% endwith %}
+
+{% endblock %}
+
+{% block body %}
+<div class="content">
+     <form action = "{{url_for('submit_file')}}" method = "POST" enctype = "multipart/form-data">
+          <input type = "file" name = "file" />
+          <input type = "submit"/>
+     </form>
+</div>
+
+{% endblock %}
