@@ -1,10 +1,9 @@
 # Youtube Wrapped  
 
-**Working link:** https://roccoho.pythonanywhere.com/ 
+**Working link:** https://roccoho.pythonanywhere.com/ (please be patient because it is ran on a free tier)
 
 (https://youtubewrap.herokuapp.com/ will no longer be supported ☹)
 
-(please be patient because it is ran on a free tier)
 
 **References:** 
 - https://github.com/A3M4/YouTube-Report
