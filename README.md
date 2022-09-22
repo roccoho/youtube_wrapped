@@ -21,7 +21,7 @@
 
 
 
-**[Youtube Wrapped](https://youtubewrap.herokuapp.com/) requires:**
+**[Youtube Wrapped](https://roccoho.pythonanywhere.com/) requires:**
 - [Youtube *watch-history.json* file from Google Takeout](https://github.com/roccoho/youtube_wrapped/wiki/Requesting-Youtube-watch-history.json-from-Google-Takeout)
 - [API key with YouTube Data API v3 enabled](https://github.com/roccoho/youtube_wrapped/wiki/Enabling-Youtube-Data-API-v3) 
 
