@@ -1,0 +1,61 @@
+<a href="#card_div">
+    <button class="anchor_button" id="summary_anc" onclick="updateAnchor(this.id)">Summary</button>
+</a>
+<br>
+<a href="#graph_div">
+    <button class="anchor_button" id="graph_anc" onclick="updateAnchor(this.id)">Graph</button>
+</a>
+<br>
+    
+<br> 
+<div class="each_radio" id="graph_hour_div">
+    <input type="radio" id="graph_hour" name="graph_type" onclick="chooseGraph(this.id)" value="hour_hist">
+    <label for="graph_hour">Hour</label><br>
+</div>
+<div class="each_radio" id="graph_week_div">
+    <input type="radio" id="graph_week" name="graph_type" onclick="chooseGraph(this.id)" value="week_hist">
+    <label for="graph_week">Week</label><br>
+</div>
+<div class="each_radio" id="graph_month_div">
+    <input type="radio" id="graph_month" name="graph_type" onclick="chooseGraph(this.id)" value="month_hist">
+    <label for="graph_month">Month</label><br>
+</div>
+<div class="each_radio" id="graph_year_div">
+    <input type="radio" id="graph_year" name="graph_type" onclick="chooseGraph(this.id)" value="day_hist" checked>
+    <label for="graph_year">Year</label><br>
+</div>  
+<div class="each_radio" id="graph_year_div">
+    <input type="radio" id="graph_week_hour" name="graph_type" onclick="chooseGraph(this.id)" value="week_hour_hist">
+    <label for="graph_week_hour">Week/Hour</label><br>
+</div>  
+
+<br>
+<div class="each_radio" id="watch_radio_div">
+    <input type="radio" id="watch_radio" name="y_axis_type" onclick="chooseGraph(this.id)" value="watch">
+    <label for="watch_radio">Watch Time (minutes)</label><br>
+</div>
+<div class="each_radio" id="video_radio_div">
+    <input type="radio" id="video_radio" name="y_axis_type" onclick="chooseGraph(this.id)" value="video" >
+    <label for="video_radio">Videos</label><br>
+</div>
+<div class="each_radio" id="both_radio_div">
+    <input type="radio" id="both_radio" name="y_axis_type" onclick="chooseGraph(this.id)" value="both" checked>
+    <label for="both_radio">Both</label><br>
+</div>
+<br>
+
+
+<div class="each_radio" id="line_chart_div">
+    <input type="radio" id="line_chart" name="chart_type" onclick="chooseGraph(this.id)" value="line" checked>
+    <label for="line_chart">Line</label><br>
+</div>
+<div class="each_radio" id="bar_chart_div">
+    <input type="radio" id="bar_chart" name="chart_type" onclick="chooseGraph(this.id)" value="bar">
+    <label for="bar_chart">Bar</label><br>
+</div>
+ 
+<br>
+<a href="https://github.com/roccoho/youtube_wrapped" target="_blank">
+    <button class="source_side_bar">Source code</button>
+</a>
+<br>

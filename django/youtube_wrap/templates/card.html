@@ -1,0 +1,68 @@
+<input onclick='paging(this.id);' class="arrow left_arrow" id="left_arrow" type="image" src="https://cdn.discordapp.com/attachments/231274594713993217/991663056436350986/arrow.png"/>
+<input onclick='paging(this.id);' class="arrow right_arrow" id="right_arrow" type="image" src="https://cdn.discordapp.com/attachments/231274594713993217/991663056436350986/arrow.png"/>
+<div class="vertical">
+    <div class="youtube_header">
+        <a href="/">
+            <img id="youtube_header_img" src="https://cdn.discordapp.com/attachments/231274594713993217/996134397956861992/youtube_logo_with_header_ribbon.png" alt="Youtube Wrapper logo" width="500">
+        </a>
+    </div>
+    <div id="cards">
+        <div id="summary" class="div_summary">
+            <div class = "summary_watched_header">
+                <p class="summary_watched_title"> MINUTES WATCHED</p>
+                <p id="summary_minutes_watched"></p>
+                <br>
+                <p class="summary_watched_title"> VIDEOS WATCHED</p>
+                <p id="summary_videos_watched"></p>
+                <br>
+                <p class="summary_watched_title"> OPTIMAL VIDEO LENGTH</p>
+                <p id="summary_optimal_length"></p> 
+            </div>
+            <div class="all_top_5s">
+                <div class="summary_top_header">
+                        <p class='top_5_header' id="summary_top_video">TOP VIDEO</p>
+                        <p class='top_5_header' id="summary_top_channel">TOP CHANNEL</p>
+                </div>
+                <div class="summary_top_5_lists" id="summary_top_5_lists"></div>
+                <script> summary(data);</script>
+            </div>
+        </div> 
+
+        <div id="channel" class="div_channel">
+            <div class="channel_top_channel">
+                <img id="channel_top_channel_img" src="https://cdn.discordapp.com/attachments/231274594713993217/996485161657049128/yourtopchannel.png" width="400">
+            </div>
+            <div id="channel_top_5" class="channel_top_5"></div>
+            <script> channel(data);</script>
+        </div>
+
+        <div id="video" class="div_video">
+            <div class="video_top_video">
+                <img id="video_top_video_img" src="https://cdn.discordapp.com/attachments/231274594713993217/996485161938075758/yourtopvideo.png" width="400">
+            </div>
+            <div id="video_top_5" class="video_top_5"></div>
+            <script> video(data);</script>
+        </div>
+    
+        <div id="tag" class="div_tag">
+            <div class="tag_top_tag">
+                <img id="tag_top_tag_img" src="https://cdn.discordapp.com/attachments/231274594713993217/999399370124443678/yourtopvideotags.png" width="400">
+            </div>
+            <div id="tag_top_5" class="tag_top_5"></div> 
+            <script> tag(data);</script>
+        </div>  
+    </div>
+</div>
+
+<script>
+let children_ele = document.getElementById('cards').children; 
+var sum_div_arr = Array.from(children_ele).map(d => d.id);
+for (let i = 1; i < sum_div_arr.length; i++){
+    let current_div = document.getElementById(sum_div_arr[i]);
+    current_div.style.display = "none";
+}
+var sum_active_div = 0;
+var left_arrow = document.getElementById("left_arrow");
+var right_arrow = document.getElementById("right_arrow");
+active_arrow();
+</script> 

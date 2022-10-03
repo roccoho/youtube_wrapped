@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" text="text/css" href="{% static 'styles/style.css' %}">
+    <title>File Upload</title>
+</head>
+<body>
+    <div class="absolute_center" id="non_loading">
+        {% if error %}
+        <p class=error><strong>Error:</strong> {{ error }}
+        {% endif %}
+        <p>Upload your <em>watch-history.json</em> here:</p>
+        <form action="display" method="POST" enctype="multipart/form-data" autocomplete="off" id="file_form">
+            {% csrf_token %}
+            <input type="file" name="file" id="file_input" onchange="loadingScreen();this.form.submit()" />
+        </form>
+        <br>
+        <a href="https://github.com/roccoho/youtube_wrapped/wiki/Requesting-Youtube-watch-history.json-from-Google-Takeout" title="github wiki" class="help_button" target="_blank">?help</a>
+    </div> 
+    <div class="absolute_center" id="loading">
+        <img src="https://i.gifer.com/ZZ5H.gif" id="loading_gif"/>
+        <p>Uploading...</p>
+        <p>Loading time depends on the size of your watch history so please BE PATIENT!</p>  
+    </div>
+    <div class="source_footer"> 
+        <a href="https://github.com/roccoho/youtube_wrapped" title='github' class="help_button" target= "_blank">Source code</a>
+    </div>
+
+    <script>
+        var loading = document.getElementById("loading");
+        loading.style.display = "none"; 
+        var non_loading = document.getElementById("non_loading");
+
+        function loadingScreen(){
+            non_loading.style.display = "none"; 
+            loading.style.display = "block";
+        }
+    </script>
+</body>
+</html>

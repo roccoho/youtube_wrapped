@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" text="text/css" href="{% static 'styles/style.css' %}">
+</head>
+<body>
+    <div class="absolute_center" id="non_loading">   
+        {% if error %}
+        <p class=error><strong>Error:</strong> {{ error }}
+        {% endif %}  
+        <div class="text_left_align">   
+            <p>Select date range (max range by default):</p> 
+        </div>
+        <form action="result" method="POST">
+            {% csrf_token %}
+            <label for="datefrom">From: </label>
+            <input type="date" id="datefrom" name="datefrom" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="dateto">To: </label>
+            <input type="date" id="dateto" name="dateto" /> <br>
+            <br>
+            <div class="text_left_align">
+                <label for="api_key" id="api_key_label">API key: </label>
+                <input type="text" id="api_key_input" name="api_key"><br><br>
+            </div>
+            <div id="submit_div">
+                <input type="submit" style="font-size:15px;" onclick="loadingScreen();this.form.submit()">
+            </div>
+        </form>
+        <br>
+        <a title="github wiki" href="https://github.com/roccoho/youtube_wrapped/wiki/Generating-API-key-for-Youtube-Data-API-v3" class="help_button" target= "_blank">?help</a> 
+    </div>  
+    <div class="absolute_center" id="loading">
+        <img src="https://i.gifer.com/ZZ5H.gif" id="loading_gif"/>
+        <p>Loading...</p>
+        <p>Loading time depends on the size of your watch history so please BE PATIENT!</p>  
+    </div>
+    <div class="source_footer"> 
+        <a href="https://github.com/roccoho/youtube_wrapped" title='github' class="help_button" target= "_blank">Source code</a>
+    </div>
+    
+    <script>
+        var dates_ = {{dates|safe}}; 
+        datefrom = document.getElementById('datefrom');
+        datefrom.value = datefrom.min = dateto.min = dates_[0]; 
+        dateto = document.getElementById('dateto');
+        dateto.value = datefrom.max = dateto.max = dates_[1];  
+
+        var loading = document.getElementById("loading");
+        loading.style.display = "none"; 
+        var non_loading = document.getElementById("non_loading");
+
+        function loadingScreen(){
+            non_loading.style.display = "none"; 
+            loading.style.display = "block"; 
+        }
+
+    </script>
+</body>
+</html>
