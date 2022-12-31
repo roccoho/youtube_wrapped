@@ -1,8 +1,6 @@
 # Youtube Wrapped  
 
-**Working link:** https://roccoho.pythonanywhere.com/ (please be patient because it is ran on a free tier)
-
-(https://youtubewrap.herokuapp.com/ will no longer be supported ☹)
+**Working link:** https://roccoho.pythonanywhere.com/ (please be patient because it is ran on a free tier) 
 
 
 **References:** 
