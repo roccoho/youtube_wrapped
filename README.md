@@ -32,5 +32,5 @@
 - speed up loading time, API calls bottleneck? 
 - oauth for api key?
 - handle different dates in html file: probably not
-- what happens if there are concurrent users? no idea
+- what happens if there are concurrent users? Async!
 - unique id/storage folder for each user?
